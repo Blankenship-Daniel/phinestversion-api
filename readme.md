@@ -32,14 +32,12 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 ### Songs
 
-`
-/songs
-/songs/rankings
-/songs/{id}
-/songs/{slug}
-/songs/rankings
-/songs/rankings/{slug}
-`
+* `/songs`
+* `/songs/rankings`
+* `/songs/{id}`
+* `/songs/{slug}`
+* `/songs/rankings`
+* `/songs/rankings/{slug}`
 
 ### Shows
 
