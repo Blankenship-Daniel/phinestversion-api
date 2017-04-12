@@ -13,15 +13,8 @@ use Illuminate\Support\Facades\Validator;
 class UsersController extends Controller
 {
     private function isValidUserData($email, $password) {
-        $userData = [
-            'email'    => $email,
-            'password' => $password
-        ];
-
-        $rules = array(
-            'email'    => 'required|email',
-            'password' => 'required|alphaNum|min:8'
-        );
+        $userData = [ 'email' => $email, 'password' => $password ];
+        $rules = [ 'email' => 'required|email', 'password' => 'required|alphaNum|min:8' ];
 
         $validator = Validator::make($userData, $rules);
 
