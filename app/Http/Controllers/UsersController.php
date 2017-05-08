@@ -81,6 +81,10 @@ class UsersController extends Controller
         $email    = Input::get('email');
         $password = Input::get('password');
 
+        // TODO: build out error hash that contains
+        //       the type of error encountered while
+        //       trying the register the user.
+
         if (!$this->isValidUserData($email, $password)) {
             return json_encode(false);
         }

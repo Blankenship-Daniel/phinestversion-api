@@ -12,6 +12,9 @@
 */
 
 // GET
+Route::get('/', function() {
+    return json_encode('Phinestversion API');
+});
 Route::get('/songs', 'SongsController@getAllSongs');
 Route::get('/songs/rankings', 'SongsController@getRankings');
 Route::get('/songs/{id}', 'SongsController@getSongById')->where('id', '[0-9]+');
