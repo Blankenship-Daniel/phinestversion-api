@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
+use Intervention\Image\Facades\Image;
 
 class UsersController extends Controller
 {
@@ -78,31 +79,44 @@ class UsersController extends Controller
     }
 
     public function registerUser() {
+        $image    = Input::get('image');
+        $username = Input::get('username');
         $email    = Input::get('email');
         $password = Input::get('password');
 
-        // TODO: build out error hash that contains
-        //       the type of error encountered while
-        //       trying the register the user.
+        $img = Image::make($image)->resize(300, 200);
+        $img_path = '/img/' . $username . '.jpg';
+        $img->save(public_path() . $img_path, 60);
+
+        $response = array(
+            'success' => '',
+            'status'  => '',
+            'error'   => ''
+        );
 
         if (!$this->isValidUserData($email, $password)) {
-            return json_encode(false);
+            $response['success']  = '0';
+            $response['status']   = '';
+            $response['error']    = 'The server encountered an error while trying to process your request.';
+            return json_encode($response);
         }
 
         $user = $this->getUserIfExists($email, $password);
         if ($user) {
-            return json_encode(false);
+            $response['success']  = '0';
+            $response['status']   = '';
+            $response['error']    = 'Sorry! A user with that information already exists in our system.';
+            return json_encode($response);
         }
 
-        // TODO: finish functionality to save user
-        // $user = new User;
-        // $user->image = '';
-        // $user->username = '';
-        // $user->email = $email;
-        // $user->password = Hash::make($password);
-        // $user->save();
+        $user = new User;
+        $user->image = $img_path;
+        $user->username = $username;
+        $user->email = $email;
+        $user->password = Hash::make($password);
+        $user->save();
 
         // return $user;
-        return json_encode(false);
+        return json_encode($user);
     }
 }
