@@ -8,16 +8,16 @@ class ShowRepository {
 
     public static function get($year) {
         $sql = <<<EOF
-SELECT 
-    date, 
-    name, 
+SELECT
+    date,
+    name,
     location,
     SUM(score) AS score
 FROM submissions
 INNER JOIN shows ON submissions.show_id = shows.id
 INNER JOIN venues ON venue_id = venues.id
 WHERE strftime("%Y", shows.date) = ?
-GROUP BY date 
+GROUP BY date
 ORDER BY score DESC
 EOF;
 
@@ -30,16 +30,16 @@ EOF;
         $start = $request->input('start') ? $request->input('start') : 0;
 
         $sql = <<<EOF
-SELECT 
-    date, 
-    name, 
+SELECT
+    date,
+    name,
     location,
     SUM(score) AS score
 FROM submissions
 INNER JOIN shows ON submissions.show_id = shows.id
 INNER JOIN venues ON venue_id = venues.id
 WHERE strftime("%Y", shows.date) > 1982
-GROUP BY date 
+GROUP BY date
 ORDER BY score DESC
 LIMIT ?
 OFFSET ?
@@ -51,16 +51,16 @@ EOF;
 
     public static function getShowRanking($date) {
         $sql = <<<EOF
-SELECT 
-    date, 
-    name, 
+SELECT
+    date,
+    name,
     location,
     SUM(score) AS score
 FROM submissions
 INNER JOIN shows ON submissions.show_id = shows.id
 INNER JOIN venues ON venue_id = venues.id
 WHERE shows.date = ?
-GROUP BY date 
+GROUP BY date
 ORDER BY score DESC
 EOF;
 
@@ -68,6 +68,3 @@ EOF;
         return $response;
     }
 }
-
-
-

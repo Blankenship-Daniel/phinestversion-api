@@ -7,19 +7,19 @@ class YearRepository {
 
     public static function getAll() {
         $sql = <<<EOF
-SELECT 
+SELECT
     strftime("%Y", rankings.date) AS year,
     SUM(rankings.score) AS year_score
-FROM (SELECT 
-        date, 
-        name, 
+FROM (SELECT
+        date,
+        name,
         location,
         SUM(score) AS score
     FROM submissions
     INNER JOIN shows ON submissions.show_id = shows.id
     INNER JOIN venues ON venue_id = venues.id
     WHERE strftime("%Y", shows.date) > 1982
-    GROUP BY date 
+    GROUP BY date
     ORDER BY score DESC) rankings
 GROUP BY year
 ORDER BY year_score DESC
@@ -34,19 +34,19 @@ EOF;
 SELECT
     year,
     year_score
-    FROM (SELECT 
+    FROM (SELECT
         strftime("%Y", rankings.date) AS year,
         SUM(rankings.score) AS year_score
-    FROM (SELECT 
-            date, 
-            name, 
+    FROM (SELECT
+            date,
+            name,
             location,
             SUM(score) AS score
         FROM submissions
         INNER JOIN shows ON submissions.show_id = shows.id
         INNER JOIN venues ON venue_id = venues.id
         WHERE strftime("%Y", shows.date) > 1982
-        GROUP BY date 
+        GROUP BY date
         ORDER BY score DESC) rankings
     GROUP BY year
     ORDER BY year_score DESC)

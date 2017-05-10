@@ -6,8 +6,6 @@ use App\Repositories\SubmissionRepository;
 use App\Submission;
 use Illuminate\Http\Request;
 
-use App\Http\Requests;
-
 class SubmissionsController extends Controller
 {
     public function getAllSubmissions() {

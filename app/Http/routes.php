@@ -21,6 +21,7 @@ Route::get('/songs/{id}', 'SongsController@getSongById')->where('id', '[0-9]+');
 Route::get('/songs/{slug}', 'SongsController@getSongBySlug')->where('slug', '[a-zA-Z0-9-]+');
 Route::get('/songs/rankings', 'SongsController@getRankings');
 Route::get('/songs/rankings/{slug}', 'SongsController@getRankingsBySlug')->where('slug', '[a-zA-Z0-9-]+');
+Route::get('/songs/search/{songname}', 'SearchController@searchSongs')->where('songname', '[a-zA-Z0-9-]+');
 
 Route::get('/shows', 'ShowsController@getAllShows');
 Route::get('/shows/{id}', 'ShowsController@getShowById')->where('id', '[0-9]+');
@@ -28,9 +29,11 @@ Route::get('/shows/{date}', 'ShowsController@getShowByDate')->where('date', '[0-
 Route::get('/shows/rankings', 'ShowsController@getAllShowRankings');
 Route::get('/shows/rankings/{year}', 'ShowsController@getShowRankings')->where('year', '[0-9]{4}');
 Route::get('/shows/rankings/{date}', 'ShowsController@getShowRanking')->where('date', '[0-9-]+');
+Route::get('/shows/search/{showdate}', 'SearchController@searchShows')->where('showdate', '[0-9-]+');
 
 Route::get('/years/rankings', 'ShowsController@getAllYearRankings');
 Route::get('/years/rankings/{year}', 'ShowsController@getYearRanking')->where('year', '[0-9]{4}');
+Route::get('/years/search/{year}', 'SearchController@searchYears')->where('year', '[0-9]+');
 
 Route::get('/venues', 'VenuesController@getAllVenues');
 Route::get('/venues/{id}', 'VenuesController@getVenueById')->where('id', '[0-9]+');
@@ -60,6 +63,7 @@ Route::get('/users', 'UsersController@getAllUsers');
 Route::get('/users/rankings', 'UsersController@getUserRankings');
 Route::get('/users/{id}', 'UsersController@getUserById')->where('id', '[0-9]+');
 Route::get('/users/{username}', 'UsersController@getUserByUsername')->where('username', '[a-zA-Z0-9-]+');
+Route::get('/users/search/{username}', 'SearchController@searchUsers')->where('username', '[a-zA-Z0-9-]+');
 
 // POST
 Route::post('/users/auth', 'UsersController@loginUser');
