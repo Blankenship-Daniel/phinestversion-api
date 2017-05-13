@@ -13,15 +13,15 @@ class UserRepository {
         $start = $request->input('start') ? $request->input('start') : 0;
 
         $sql = <<<EOF
-SELECT 
-    users.id AS user_id, 
-    users.image AS user_image, 
-    users.username AS username, 
-    SUM(submissions.score) AS score 
-FROM users 
-INNER JOIN 
-    submissions ON submissions.user_id = users.id 
-GROUP BY user_id 
+SELECT
+    users.id AS user_id,
+    users.image AS user_image,
+    users.username AS username,
+    SUM(submissions.score) AS score
+FROM users
+INNER JOIN
+    submissions ON submissions.user_id = users.id
+GROUP BY user_id
 ORDER BY score DESC
 LIMIT ?
 OFFSET ?
@@ -33,16 +33,16 @@ EOF;
 
     public static function getUserByUserName($username) {
         $sql = <<<EOF
-SELECT 
-    users.id AS user_id, 
-    users.image AS user_image, 
-    users.username AS username, 
-    SUM(submissions.score) AS score 
-FROM users 
-INNER JOIN 
-    submissions ON submissions.user_id = users.id 
+SELECT
+    users.id AS user_id,
+    users.image AS user_image,
+    users.username AS username,
+    SUM(submissions.score) AS score
+FROM users
+INNER JOIN
+    submissions ON submissions.user_id = users.id
 WHERE users.username = ?
-GROUP BY user_id 
+GROUP BY user_id
 ORDER BY score DESC
 EOF;
 

@@ -15,7 +15,7 @@ class UsersController extends Controller
 {
     private function isValidUserData($email, $password) {
         $userData = [ 'email' => $email, 'password' => $password ];
-        $rules = [ 'email' => 'required|email', 'password' => 'required|alphaNum|min:8' ];
+        $rules    = [ 'email' => 'required|email', 'password' => 'required|alphaNum|min:8' ];
 
         $validator = Validator::make($userData, $rules);
 
@@ -27,11 +27,21 @@ class UsersController extends Controller
     }
 
     private function getUserIfExists($email, $password) {
-        $hashedPass = Hash::make($password);
         $user = User::where('email', '=', $email)->first();
 
         if ($user && Hash::check($password, $user->password)) {
             return $user;
+        }
+
+        return false;
+    }
+
+    private function isDuplicateUser($username, $email) {
+        $username_found = User::where('username', '=', $username)->first();
+        $email_found    = User::where('email', '=', $email)->first();
+
+        if ($username_found || $email_found) {
+            return true;
         }
 
         return false;
@@ -101,8 +111,7 @@ class UsersController extends Controller
             return json_encode($response);
         }
 
-        $user = $this->getUserIfExists($email, $password);
-        if ($user) {
+        if ($this->isDuplicateUser($username, $email)) {
             $response['success']  = '0';
             $response['status']   = '';
             $response['error']    = 'Sorry! A user with that information already exists in our system.';
@@ -116,7 +125,6 @@ class UsersController extends Controller
         $user->password = Hash::make($password);
         $user->save();
 
-        // return $user;
         return json_encode($user);
     }
 }
