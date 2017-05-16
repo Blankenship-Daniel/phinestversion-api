@@ -1,2 +1,2 @@
-* * * * *  /usr/bin/php /var/www/laravel/storage/updateDB.php
+30 2 * * * /usr/bin/php /var/www/laravel/storage/updateDB.php >> /var/log/cron.log 2>&1
 

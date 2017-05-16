@@ -1,17 +1,22 @@
 #!/usr/bin/php
 <?php
-$db = new PDO('sqlite:database.sqlite');
+$db = new PDO('sqlite:/var/www/laravel/storage/database.sqlite');
 $db->setAttribute(PDO::ATTR_ERRMODE, 
                   PDO::ERRMODE_EXCEPTION);
 
 function updateDB($db) 
 {
+    echo "DELETE shows\n";
     $db->exec('DELETE FROM shows');
+    echo "DELETE songs\n";
     $db->exec('DELETE FROM songs');
+    echo "DELETE venues\n";
     $db->exec('DELETE FROM venues');   
-    
+    echo "UPDATE shows\n";
     updateShows($db);
+    echo "UPDATE songs\n";
     updateSongs($db);
+    echo "UPDATE venues\n";
     updateVenues($db);
 }
 
@@ -81,6 +86,7 @@ function updateVenues($db)
 
 try {
     updateDB($db);
+    echo 'successful update' . "\n";
 }
 catch (PDOException $e) {
     echo $e->getMessage();
