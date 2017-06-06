@@ -170,6 +170,26 @@ EOF;
         return $response;
     }
 
+    public static function getRecentSubmissions() {
+        $sql = <<<EOF
+SELECT
+    submissions.id AS submission_id,
+    submissions.description AS description,
+    songs.title AS title,
+    songs.slug AS slug,
+    shows.date AS date
+FROM submissions
+LEFT JOIN songs
+    ON submissions.song_id = songs.id
+LEFT JOIN shows
+    ON submissions.show_id = shows.id
+ORDER BY submissions.id DESC LIMIT 5
+EOF;
+
+        $response = DB::select($sql);
+        return $response;
+    }
+
     public static function saveSubmission(Request $request) {
         $song_id      = $request->input('song_id');
         $show_id      = $request->input('show_id');

@@ -69,6 +69,32 @@ EOF;
         return $response;
     }
 
+    public static function getRecentComments() {
+        $sql = <<<EOF
+SELECT
+    songs.slug as slug,
+    songs.title as title,
+    users.username as username,
+    submission_id,
+    comment,
+    comments.created_at as created_at,
+    shows.date as date
+FROM comments
+    LEFT JOIN submissions
+        ON comments.submission_id = submissions.id
+    LEFT JOIN songs
+        ON songs.id = submissions.song_id
+    LEFT JOIN users
+        ON users.id = submissions.user_id
+    LEFT JOIN shows
+        ON shows.id = submissions.show_id
+    ORDER BY comments.created_at DESC LIMIT 5
+EOF;
+
+        $response = DB::select($sql);
+        return $response;
+    }
+
     public static function saveComment(Request $request) {
         $submission_id  = $request->input('submission_id');
         $comment        = $request->input('comment');

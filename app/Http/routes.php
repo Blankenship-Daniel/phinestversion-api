@@ -42,12 +42,14 @@ Route::get('/venues/{id}', 'VenuesController@getVenueById')->where('id', '[0-9]+
 Route::get('/venues/{slug}', 'VenuesController@getVenueBySlug')->where('slug', '[a-zA-Z0-9-]+');
 
 Route::get('/comments', 'CommentsController@getAllComments');
+Route::get('/comments/recent', 'CommentsController@getRecentComments');
 Route::get('/comments/{id}', 'CommentsController@getCommentById')->where('id', '[0-9]+');
 Route::get('/comments/user/{id}', 'CommentsController@getCommentsByUserId')->where('id', '[0-9]+');
 Route::get('/comments/submission/{id}', 'CommentsController@getCommentsBySubmissionId')->where('id', '[0-9]+');
 Route::get('/comments/count/submission/{id}', 'CommentsController@getCommentsBySubmissionIdCount')->where('id', '[0-9]+');
 
 Route::get('/submissions', 'SubmissionsController@getAllSubmissions');
+Route::get('/submissions/recent', 'SubmissionsController@getRecentSubmissions');
 Route::get('/submissions/{id}', 'SubmissionsController@getSubmissionById')->where('id', '[0-9]+');
 Route::get('/submissions/song/{id}', 'SubmissionsController@getSubmissionsBySongId')->where('id', '[0-9]+');
 Route::get('/submissions/slug/{slug}', 'SubmissionsController@getSubmissionsBySlug')->where('slug', '[a-zA-Z0-9-]+');

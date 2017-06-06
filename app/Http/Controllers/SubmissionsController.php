@@ -48,6 +48,11 @@ class SubmissionsController extends Controller
         return json_encode($submissions);
     }
 
+    public function getRecentSubmissions() {
+        $submissions = SubmissionRepository::getRecentSubmissions();
+        return json_encode($submissions);
+    }
+
     public function saveSubmission(Request $request) {
         $submission_id = SubmissionRepository::saveSubmission($request);
         return $this->getSubmissionById($submission_id);

@@ -35,6 +35,11 @@ class CommentsController extends Controller
         return json_encode($comments);
     }
 
+    public function getRecentComments() {
+        $comments = CommentRepository::getRecentComments();
+        return json_encode($comments);
+    }
+
     public function saveComment(Request $request) {
         $comment_id = CommentRepository::saveComment($request);
         return $this->getCommentById($comment_id);
